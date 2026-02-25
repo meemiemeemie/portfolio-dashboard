@@ -1,0 +1,2 @@
+/api/*  https://api.dashlane.com/public/teams/:splat  200
+/*       /index.html   200

@@ -1,1 +1,1 @@
-export const API_BASE_URL = 'https://api.dashlane.com/public/teams';
+export const API_BASE_URL = '/api';
