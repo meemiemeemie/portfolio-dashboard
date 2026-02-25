@@ -24,38 +24,26 @@ To provide this tool to non-technical admins without requiring them to use the t
 6.  **Done!** Share the production URL with your admins.
     *   *Note: `vercel.json` is included to handle routing.*
 
-### Option 2: GitLab Pages
-1.  Push this code to your GitLab repository.
-2.  The included `.gitlab-ci.yml` file will automatically trigger a pipeline.
-3.  Once finished, go to **Deploy > Pages** in your repo settings to find your URL.
-4.  **Important**: If your page is blank, you may need to set the `homepage` field in `package.json`.
-    *   Open `package.json`
-    *   Add `"homepage": "https://your-username.gitlab.io/your-project-name",`
-    *   Add `"homepage": "https://your-username.gitlab.io/your-project-name",`
-    *   Push the change.
+### Option 2: Netlify
+1.  Fork or push this repository to your GitHub/GitLab.
+2.  Log in to [Netlify](https://www.netlify.com/) and click "Add new site" > "Import an existing project".
+3.  Connect to your repository provider and select this project.
+4.  Netlify will automatically detect the build settings (`npm run build` and `build` directory).
+5.  Click **Deploy site**.
+6.  *Note: The included `public/_redirects` file handles routing and API proxying automatically.*
 
-### Option 2a: Manual GitLab Setup (No Terminal)
-If you cannot use `git` commands, you can use the GitLab Website:
+### Option 3: Render
+1.  Fork or push this repository to your GitHub/GitLab.
+2.  Log in to [Render](https://render.com/) and create a new **Static Site**.
+3.  Connect your repository.
+4.  Set the Build Command to `npm run build` and the Publish directory to `build`.
+5.  Click **Create Static Site**.
+6.  **Important**: Render Static Sites do not automatically read proxy configuration files. You must manually add a Rewrite rule in the Render Dashboard so the Dashboard can communicate with the Dashlane API:
+    *   Go to **Redirects/Rewrites** in your Render site settings.
+    *   Add rule -> **Source**: `/api/*`, **Destination**: `https://api.dashlane.com/public/teams/*`, **Action**: `Rewrite`.
+    *   Add rule -> **Source**: `/*`, **Destination**: `/index.html`, **Action**: `Rewrite` (to handle React routing).
 
-1.  **Create Project**: Go to GitLab and create a "New Blank Project".
-2.  **Open Web IDE**: On your new project page, look for the **Edit** button (usually a blue button or dropdown) and select **Web IDE**.
-3.  **Upload Files**:
-    *   On your computer, open the folder containing this code.
-    *   **Select** the following folders/files: `src`, `public`, `package.json`, `package-lock.json`, `.gitlab-ci.yml`, `tailwind.config.js`, `README.md`.
-    *   **IMPORTANT**: Do NOT select `node_modules` or `.git`.
-    *   **Drag and Drop** these selected items directly into the file tree on the left side of the Web IDE.
-4.  **Commit**:
-    *   Click the "Source Control" icon (looks like a branch) on the far left.
-    *   Type a commit message (e.g., "Initial upload").
-    *   Click **Commit to 'main'**.
-5.  **Deploy**: GitLab will now see the `.gitlab-ci.yml` file and automatically start the deployment. Go to **Deploy > Pages** after a few minutes to see your link.
-
-### Option 3: Netlify
-1.  Drag and drop the `build` folder to Netlify Drop, or connect your Git repository.
-2.  Ensure build command is `npm run build` and publish directory is `build`.
-3.  Add a `_redirects` file with `/* /index.html 200` to `public/` folder to handle routing.
-
-### Option 3: Local Usage (Technical)
+### Option 4: Local Usage (Technical)
 1.  Install Node.js.
 2.  Run `npm install`.
 3.  Run `npm start`.
