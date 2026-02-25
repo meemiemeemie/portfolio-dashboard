@@ -1,61 +1,67 @@
-# Dashlane Custom Security Dashboard Documentation
+# Portfolio Dashboard
 
-Welcome to the **Dashlane Custom Security Dashboard Documentation**. After releasing the [Dashlane Public API](https://github.com/Dashlane/public-api-documentation), we released this sample application and guide for learning and demonstration purposes. This serves as a basic introduction to using the Dashlane Public API **read-only** endpoints to access valuable insights related
-to your Dashlane team account, its members and their devices.
+A modern dashboard for managing multiple Dashlane teams (Portfolio View).
+Features a slick glassmorphism design, CSV export, and persistent configuration.
 
----
+## 🚀 Features
 
-## Getting Started
+*   **Multi-Tenant Support**: Add multiple (Brand Name, API Token) pairs.
+*   **Portfolio Overview**: Aggregated stats (Total Seats, Avg Health Score).
+*   **Team Drill-Down**: Detailed view for each organization.
+*   **CSV Export**: Flattened data export for all users.
+*   **Persistent Config**: Tokens are saved locally in your browser.
 
-We’ve built a simple React application that creates a configurable security dashboard. This dashboard can be expanded to include other metrics, creating a custom dashboard so you can monitor in real time and quickly respond to credential-based risks.
+## 📦 Deployment Guide (For Admins)
 
-1. **Clone the repository**  
-   Clone [this repository](https://github.com/Dashlane/public-api-dashboard-demo) and download it on to your machine.
+To provide this tool to non-technical admins without requiring them to use the terminal, we recommend **hosting the application**.
 
-2. **Generate an API Key**  
-   To communicate with our API, you’ll need an access key. Navigate to the Dashlane Admin Console > Integrations > Public API. Select “Create Key.” Give the key a description. Make sure you copy and save the bearer token in a secure place. You will not be able to access it again.
+### Option 1: Vercel (Recommended)
+1.  Fork or push this repository to your GitHub/GitLab.
+2.  Log in to [Vercel](https://vercel.com).
+3.  Click "Add New Project" and select this repository.
+4.  Vercel will detect Create React App.
+5.  Click **Deploy**.
+6.  **Done!** Share the production URL with your admins.
+    *   *Note: `vercel.json` is included to handle routing.*
 
-3. **Install the dependencies**  
-   Go to your preferred console and run:
+### Option 2: GitLab Pages
+1.  Push this code to your GitLab repository.
+2.  The included `.gitlab-ci.yml` file will automatically trigger a pipeline.
+3.  Once finished, go to **Deploy > Pages** in your repo settings to find your URL.
+4.  **Important**: If your page is blank, you may need to set the `homepage` field in `package.json`.
+    *   Open `package.json`
+    *   Add `"homepage": "https://your-username.gitlab.io/your-project-name",`
+    *   Add `"homepage": "https://your-username.gitlab.io/your-project-name",`
+    *   Push the change.
 
-    ```bash
-    npm install
-    ```
-4. **Run the dashboard**  
-   From your console, navigate to the project folder, and run:
+### Option 2a: Manual GitLab Setup (No Terminal)
+If you cannot use `git` commands, you can use the GitLab Website:
 
-    ```bash
-    REACT_APP_DASHLANE_API_KEY="<DASHLANE BEARER TOKEN>" npm start
-    ```
-    A new browser window will open with your company’s custom security dashboard.
+1.  **Create Project**: Go to GitLab and create a "New Blank Project".
+2.  **Open Web IDE**: On your new project page, look for the **Edit** button (usually a blue button or dropdown) and select **Web IDE**.
+3.  **Upload Files**:
+    *   On your computer, open the folder containing this code.
+    *   **Select** the following folders/files: `src`, `public`, `package.json`, `package-lock.json`, `.gitlab-ci.yml`, `tailwind.config.js`, `README.md`.
+    *   **IMPORTANT**: Do NOT select `node_modules` or `.git`.
+    *   **Drag and Drop** these selected items directly into the file tree on the left side of the Web IDE.
+4.  **Commit**:
+    *   Click the "Source Control" icon (looks like a branch) on the far left.
+    *   Type a commit message (e.g., "Initial upload").
+    *   Click **Commit to 'main'**.
+5.  **Deploy**: GitLab will now see the `.gitlab-ci.yml` file and automatically start the deployment. Go to **Deploy > Pages** after a few minutes to see your link.
 
----
+### Option 3: Netlify
+1.  Drag and drop the `build` folder to Netlify Drop, or connect your Git repository.
+2.  Ensure build command is `npm run build` and publish directory is `build`.
+3.  Add a `_redirects` file with `/* /index.html 200` to `public/` folder to handle routing.
 
-## Extending the dashboard
+### Option 3: Local Usage (Technical)
+1.  Install Node.js.
+2.  Run `npm install`.
+3.  Run `npm start`.
 
-Currently, the dashboard retrieves information from the four available endpoints.
-
-It shows user information, including password health metrics and the user’s registered devices, available from the Devices endpoint.
-
-In addition, the dashboard shows historical and current Password Health scores, as well as the number of weak, compromised, reused, and safe passwords, available from the Password Health endpoint.
-
-Lastly, it shows company information such as available seats and pending invitations.
-
-Want to add more to your dashboard? The Dashlane Public API currently offers four endpoints that you can use to extend and add value to your dashboards or custom solutions.
-
----
-
-## API Reference
-
-Dashlane provides an **OpenAPI 3.0 specification** to help you explore and utilize the Public API.
-
--   Download the specification [here](https://get.dashlane.com/public-api/openapi.json).
--   Alternatively, use the [Documentation UI](https://dashlane.github.io/public-api-documentation/) for a user-friendly interface to explore the available endpoints.
-
-
----
-
-## Contributing
-
-We welcome contributions to this project! If you have ideas or enhancements, feel free to fork the repository and submit a pull request.
-Please ensure that any contributions are either open source or your original work.
+## 🛠 Tech Stack
+*   React
+*   Tailwind CSS (Custom Dark Theme)
+*   Recharts
+*   Axios
