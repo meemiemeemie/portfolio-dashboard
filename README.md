@@ -43,10 +43,26 @@ To provide this tool to non-technical admins without requiring them to use the t
     *   Add rule -> **Source**: `/api/*`, **Destination**: `https://api.dashlane.com/public/teams/*`, **Action**: `Rewrite`.
     *   Add rule -> **Source**: `/*`, **Destination**: `/index.html`, **Action**: `Rewrite` (to handle React routing).
 
-### Option 4: Local Usage (Technical)
-1.  Install Node.js.
-2.  Run `npm install`.
-3.  Run `npm start`.
+### Option 4: Local Usage (For Admins starting from scratch)
+If you want to run this on your own computer but don't have a developer setup, follow these steps:
+
+1.  **Download Node.js**:
+    *   Go to [https://nodejs.org/](https://nodejs.org/) and download the "LTS" (Long Term Support) version for your operating system (Windows or macOS).
+    *   Run the installer and follow the default prompts. This installs both `node` and `npm` (Node Package Manager).
+2.  **Download this Project**:
+    *   On this repository page, click the green **Code** button and select **Download ZIP**.
+    *   Extract the ZIP file to a folder on your computer (e.g., your Desktop).
+3.  **Open your Terminal/Command Prompt**:
+    *   **Mac**: Press `Cmd + Space`, type `Terminal`, and hit Enter.
+    *   **Windows**: Press the Windows key, type `cmd`, and hit Enter to open Command Prompt.
+4.  **Navigate to the Project Folder**:
+    *   In the terminal, type `cd ` (cd followed by a space).
+    *   Drag and drop the extracted folder from your Desktop into the terminal window, then hit Enter.
+5.  **Install Dependencies**:
+    *   Type `npm install` and hit Enter. Wait for it to finish (this downloads the required libraries).
+6.  **Start the Dashboard**:
+    *   Type `npm start` and hit Enter.
+    *   The dashboard will automatically open in your default web browser at `http://localhost:3000`.
 
 ## 🛠 Tech Stack
 *   React
