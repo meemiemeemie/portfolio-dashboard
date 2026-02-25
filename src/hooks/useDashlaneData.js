@@ -23,10 +23,14 @@ export const useDashlaneData = () => {
                 })
             ]);
 
+            const healthData = healthscore.data?.data;
+            const history = healthData?.history || [];
+            const current = healthData?.current || { score: 0, date: new Date().toISOString() };
+
             const data = {
-                team: team.data.data,
-                healthscore: [...healthscore.data.data.history, healthscore.data.data.current],
-                users: users.data.data
+                team: team.data?.data || {},
+                healthscore: [...history, current],
+                users: users.data?.data || []
             };
 
             setTenants(prev => prev.map(t =>
