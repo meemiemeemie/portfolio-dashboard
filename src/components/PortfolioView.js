@@ -10,12 +10,16 @@ const PortfolioView = ({ tenants }) => {
     const totalInvited = loadedTenants.reduce((acc, t) => acc + (t.data.team.seats.pending || 0), 0); // Assuming pending count is available? Usually implies invited but not accepted. Check API structure if possible, usually seats.pending exists.
     const totalAllocated = totalSeats + totalRemaining;
 
-    const avgHealthScore = loadedTenants.length > 0
-        ? loadedTenants.reduce((acc, t) => {
-            const history = t.data.healthscore;
-            const current = history[history.length - 1];
+    const tenantsWithScores = loadedTenants.filter(t => {
+        const current = t.data.healthscore[t.data.healthscore.length - 1];
+        return current && current.score > 0;
+    });
+
+    const avgHealthScore = tenantsWithScores.length > 0
+        ? tenantsWithScores.reduce((acc, t) => {
+            const current = t.data.healthscore[t.data.healthscore.length - 1];
             return acc + (current ? current.score : 0);
-        }, 0) / loadedTenants.length
+        }, 0) / tenantsWithScores.length
         : 0;
 
     const sortedTenants = React.useMemo(() => {
@@ -122,7 +126,17 @@ const PortfolioView = ({ tenants }) => {
                             <path fillRule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clipRule="evenodd" />
                         </svg>
                     </div>
-                    <h3 className="text-accent/80">Avg. Health Score</h3>
+                    <div className="flex items-center gap-2">
+                        <h3 className="text-accent/80">Avg. Health Score</h3>
+                        <div className="group/tooltip relative inline-block cursor-help">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400 hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-slate-800 text-[10px] text-gray-200 rounded-lg shadow-xl opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible transition-all duration-200 z-10 border border-border-glass leading-tight pointer-events-none">
+                                Organizations with a score of 0 (insufficient data) are excluded from this average calculation.
+                            </div>
+                        </div>
+                    </div>
                     <p className="text-4xl font-bold text-white mt-2">
                         {(avgHealthScore / 100).toLocaleString("en", { style: "percent", minimumFractionDigits: 1 })}
                     </p>

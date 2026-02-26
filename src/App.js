@@ -14,29 +14,54 @@ const App = () => {
     setView('portfolio');
   };
 
+  // Mock data for verification
+  const mockTenants = [
+    {
+      id: 'mock-1',
+      name: 'Mock Org 1',
+      status: 'success',
+      data: {
+        team: { seats: { active: 10, remaining: 5, pending: 2 } },
+        healthscore: [{ score: 80, weak: 1, reused: 2, compromised: 0 }]
+      }
+    },
+    {
+      id: 'mock-2',
+      name: 'Mock Org 2 (Zero Score)',
+      status: 'success',
+      data: {
+        team: { seats: { active: 5, remaining: 2, pending: 1 } },
+        healthscore: [{ score: 0, weak: 0, reused: 0, compromised: 0 }]
+      }
+    }
+  ];
+
+  const tenantsToUse = tenants.length > 0 ? tenants : mockTenants;
+  const currentView = tenants.length > 0 ? view : 'portfolio';
+
   const handleBackToConfig = () => {
     setView('config');
     clearTenants();
   };
 
-  if (view === 'config') {
+  if (currentView === 'config') {
     return <ConfigScreen onStart={handleStart} />;
   }
 
-  const activeTenant = tenants.find(t => t.id === view);
+  const activeTenant = tenantsToUse.find(t => t.id === currentView);
 
   return (
     <div className="flex min-h-screen bg-dark text-white font-sans">
       <Sidebar
-        tenants={tenants}
-        activeView={view}
+        tenants={tenantsToUse}
+        activeView={currentView}
         onSelectView={setView}
         onBackToConfig={handleBackToConfig}
       />
 
       <div className="flex-1 ml-64 p-8 relative">
-        {view === 'portfolio' && (
-          <PortfolioView tenants={tenants} />
+        {currentView === 'portfolio' && (
+          <PortfolioView tenants={tenantsToUse} />
         )}
 
         {activeTenant && (
